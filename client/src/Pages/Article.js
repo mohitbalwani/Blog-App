@@ -3,15 +3,19 @@ import { useParams } from 'react-router-dom'
 import ArticlesData from '../Assets/Data/articles-data';
 import NotFound from './NotFound';
 
+// Components
+import Articles from '../Components/Articles';
+
 const Article = () => {
   const { name } = useParams();
   const article = ArticlesData.find((article) => article.name === name)
   if (!article) {
     return <NotFound />
   }
-  console.log(name);
+  
+  const otherArticles = ArticlesData.filter(article => article.name!== name)
   return (
-    <div>
+    <>
       <h1 className="sm:text-4xl text-2xl font-bold my-6 text-gray-900">
         {article.title}
       </h1>
@@ -22,7 +26,13 @@ const Article = () => {
           </p>
         ))
       }
-    </div>
+      <h1 className='sm:text-2xl text-xl font-bold my-4 text-gray-900'>
+        Other Articles
+      </h1>
+      <div className='flex flex-wrap -m-4'>
+        <Articles articles={otherArticles}/>
+      </div>
+    </>
   )
 }
 
